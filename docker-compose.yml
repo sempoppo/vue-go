@@ -10,6 +10,7 @@ services:
      - .:/app
     working_dir: /app
     tty: true
+    command: sh -c "cd assets && yarn install && yarn serve"
 
   backend:
     build: ./docker/backend
@@ -20,4 +21,16 @@ services:
       - .:/backend/src
     working_dir: /backend/src/app
     tty: true
+    command: fresh
+  nginx:
+    image: nginx
+    depends_on: 
+      - backend
+    container_name: jphack_nginx
+    ports: 
+      - 8082:8082
+    environment:
+      - TZ=Asia/Tokyo
+    volumes:
+      - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf
   
