@@ -1,0 +1,23 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./docker/frontend
+    container_name: jphack_frontend
+    ports:
+      - 8080:8080
+    volumes:
+     - .:/app
+    working_dir: /app
+    tty: true
+
+  backend:
+    build: ./docker/backend
+    container_name: jphack_backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/backend/src
+    working_dir: /backend/src/app
+    tty: true
+  
